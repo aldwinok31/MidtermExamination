@@ -29,10 +29,11 @@ class AlarmClock :AppCompatActivity() {
     lateinit var pi:PendingIntent
 var hour:Int = 0
     var min:Int=0
+    var sec: Int =0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.alarm)
-        this.con=thisx
+        this.con=this
         am = getSystemService(Context.ALARM_SERVICE) as AlarmManager
         tp = findViewById(R.id.timePicker) as TimePicker
         btnStart = findViewById(R.id.button2) as Button
