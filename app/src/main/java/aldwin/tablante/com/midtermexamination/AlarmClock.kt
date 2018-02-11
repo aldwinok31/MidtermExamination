@@ -5,9 +5,7 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.os.Build
-import android.os.Bundle
-import android.os.PersistableBundle
+import android.os.*
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.Button
@@ -27,9 +25,11 @@ class AlarmClock :AppCompatActivity() {
     lateinit var btnStart: Button
     lateinit var updatetxt:TextView
     lateinit var pi:PendingIntent
+     var sec:Int = 0
+    var nTimer : alarm = alarm()
 var hour:Int = 0
     var min:Int=0
-    var sec: Int =0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.alarm)
@@ -53,6 +53,8 @@ var hour:Int = 0
                     calendar.set(Calendar.MILLISECOND,0)
                     hour = tp.hour
                     min = tp.minute
+                   sec = 0
+
 
                 }
                 else{
@@ -66,6 +68,9 @@ var hour:Int = 0
                     calendar.set(Calendar.MILLISECOND,0)
                     hour = tp.currentHour
                     min = tp.currentMinute
+                   // sec = System.currentTimeMillis().toInt()
+
+
 
 
 
@@ -74,7 +79,7 @@ var hour:Int = 0
 
                 var hr_string: String = hour.toString()
                 var min_string: String = min.toString()
-
+                var sec_string: String = sec.toString()
                 if( hour>12){
                 hr_string = (hour - 12).toString()
                 }
@@ -111,4 +116,88 @@ var hour:Int = 0
         })
 
     }
+
+
+
+
+
+
+
+
+
+    inner class alarm : AsyncTask<Int,String,Void> () {
+        override fun doInBackground(vararg p0: Int?): Void? {
+            var limit = p0[0]
+            var limit2 = p0[1]
+            var limit3 = p0[2]
+            var i = limit
+
+            var i2 = limit2
+
+            var i3 = limit3
+            try {
+                //for (i2 in limit2!! downTo 0) {
+
+                while(i3!! >=0) {
+
+                    if (i2!! >= 60) {
+                        while (i2!! > 60) {
+                            i2 = i2.minus(60)
+                            i3 = i3!!.plus(1)
+
+                        }
+                    }
+                    while (i2!! >= 0) {
+
+                        if (i!! >= 60) {
+                            while (i > 60) {
+                                i -= 60
+                                i2 = i2!!.plus(1)
+
+                            }
+                        }
+                        while (i!! > 0) {
+                            publishProgress(i.toString(), i2.toString(),i3.toString())
+                            Thread.sleep(1000)
+                            i = i!!.minus(1)
+                        }
+                        if (i == 0) {
+                            i = 60
+                        }
+                        i2 = i2!!.minus(1)
+                    }
+
+                    i3 = i3!!.minus(1)
+                }
+
+
+                //}
+                val vibratorService: Vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+                vibratorService.vibrate(1000)
+                nTimer!!.cancel(true)
+                //txt1!!.setText("00:00")
+
+            } catch (ex: InterruptedException) {
+                ex.stackTrace
+               // saver = limit!!
+
+            }
+
+
+            return null
+        }
+
+        override fun onPostExecute(result: Void?) {
+            super.onPostExecute(result)
+        }
+
+        override fun onProgressUpdate(vararg values: String?) {
+            super.onProgressUpdate(*values)
+        }
+
+
+
+    }
+
+
 }
