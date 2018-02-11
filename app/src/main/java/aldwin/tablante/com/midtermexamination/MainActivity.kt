@@ -3,6 +3,8 @@ package aldwin.tablante.com.midtermexamination
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.media.RingtoneManager
+import android.net.Uri
 import android.os.AsyncTask
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -69,7 +71,10 @@ bool = true
         var strings = string[0]
         var strings2 = string[1]
         var strings3 = string[2]
+
         var txt1 = findViewById<TextView>(R.id.textView)
+
+
         if(strings.toInt() <10){
             strings = "0$strings"
         }
@@ -79,7 +84,10 @@ bool = true
         if(strings3.toInt() <10){
             strings3 = "0$strings3"
         }
+
         txt1!!.setText(strings + " : "+ strings2 + " : " + strings3)
+
+
 
 
 
@@ -101,7 +109,7 @@ bool = true
            try {
                //for (i2 in limit2!! downTo 0) {
 
-               while(i3!! >=0) {
+               while(i3!! >0 || i2 != 0 || i != 0) {
 
                    if (i2!! > 60) {
                        while (i2!! > 60) {
@@ -110,7 +118,7 @@ bool = true
 
                        }
                    }
-                   if (i2 == 0) {
+                   if (i2 == 0 && i3!! > 0) {
                        i2 = 60
                        i3 = i3!!.minus(1)
                    }
@@ -118,7 +126,7 @@ bool = true
 
 
 
-                   while (i2!! >= 0) {
+                   while (i2!! > 0 || i != 0) {
 
                             if (i!! > 60) {
 
@@ -128,6 +136,10 @@ bool = true
                                }
 
                               }
+                       if (i == 0) {
+                           i = 59
+                           i2 = i2!!.minus(1)
+                       }
 
 
 
@@ -141,12 +153,9 @@ bool = true
 
 
 
-                       if (i == 0) {
-                           i = 59
-                       }
 
 
-                       i2 = i2!!.minus(1)
+
 
 
 
@@ -154,18 +163,23 @@ bool = true
 
                    }
 
+if(i3!! <= 0 && i2 <= 0 && i!! <= 0){
+    break
 
+}
 
-i3 = i3!!.minus(1)
 
                }
 
 
                //}
                val vibratorService: Vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-               vibratorService.vibrate(1000)
+               playAlarm()
+               vibratorService.vibrate(10000)
+               playAlarm()
+               vibratorService.vibrate(10000)
                nTimer!!.cancel(true)
-               txt1!!.setText("00:00:00")
+               txt1!!.setText("00 : 00 : 00")
 
            } catch (ex: InterruptedException) {
                ex.stackTrace
@@ -199,6 +213,20 @@ return null
    }
 
 
+
+
+
+    private fun playAlarm() {
+        var alarmUri: Uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)
+
+        if(alarmUri == null){
+            alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+
+
+        }
+        RingtoneService.r = RingtoneManager.getRingtone(baseContext,alarmUri)
+        RingtoneService.r.play()
+    }
 
 
 }
