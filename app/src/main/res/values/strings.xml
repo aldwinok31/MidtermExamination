@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">MidtermExamination</string>
+    <string name="go_to_alarm">Go to Alarm</string>
+    <string name="sec">Sec</string>
+    <string name="hr">Hr</string>
+    <string name="min">Min</string>
+    <string name="_0">0</string>
+
+    <string name="_dash">-</string>
+    <string name="_colon">:</string>
+
 </resources>

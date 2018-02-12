@@ -1,6 +1,5 @@
 package aldwin.tablante.com.midtermexamination
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.media.RingtoneManager
@@ -10,8 +9,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Vibrator
 import android.widget.*
-import org.w3c.dom.Text
-import kotlinx.android.synthetic.main.activity_main.*
+
 class MainActivity : AppCompatActivity() {
 var txt1 : TextView? = null
 var bool:Boolean = true
@@ -22,10 +20,10 @@ var nTimer : Timer? = null
         super.onCreate(savedInstanceState)
      setContentView(R.layout.activity_main)
 
-        var nBut1 = findViewById<Button>(R.id.button) as Button
-        var but1 : ToggleButton = findViewById<ToggleButton>(R.id.TogBut1) as ToggleButton
+        val nBut1 = findViewById<Button>(R.id.button)
+        val but1 : ToggleButton = findViewById<ToggleButton>(R.id.TogBut1)
 
-        var txtv1 = findViewById<TextView>(R.id.textView) as TextView
+        val txtv1 = findViewById<TextView>(R.id.textView)
 
         txt1 = txtv1
 
@@ -47,15 +45,25 @@ but1.setOnClickListener {
         val edt1: EditText = findViewById<EditText>(R.id.edt1) as EditText
         val edt:EditText = findViewById(R.id.edt) as EditText
         val edt2:EditText = findViewById(R.id.edt2) as EditText
-        var y : Int = edt2.text.toString().toInt()
-        var z : Int = edt.text.toString().toInt()
-        var x : Int = edt1.text.toString().toInt()
 
-        mTimer.execute(x,z,y)
-  nTimer = mTimer
-        bool = false
+        if(!edt1.text.toString().equals("") && !edt.text.toString().equals("")  && !edt2.text.toString().equals("")) {
+            var y: Int = edt2.text.toString().toInt()
+            var z: Int = edt.text.toString().toInt()
+            var x: Int = edt1.text.toString().toInt()
+
+            mTimer.execute(x, z, y)
+            nTimer = mTimer
+            bool = false
+        }
+
+        else{
+            Toast.makeText(this@MainActivity, "Input Complete Number", Toast.LENGTH_SHORT).show();
+
+        }
+
     }
     else{
+
         nTimer!!.cancel(true)
         nTimer = null
 
